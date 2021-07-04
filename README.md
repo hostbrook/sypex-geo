@@ -24,12 +24,12 @@ composer update
 ## Basic Usage ( with city database example )
 
 ```shell
-use \HostBrook\SxGeo\SxGeo;
+use \HostBrook\SypexGeo\SypexGeo;
 
 ...
 
 // Create an object with the required database:
-$SxGeo = new SxGeo('SxGeoCity.dat');
+$SxGeo = new SypexGeo('SxGeoCity.dat');
 
 // get your IP address:
 $userIP = $_SERVER['REMOTE_ADDR'];
@@ -42,12 +42,12 @@ var_export($SxGeo->get($userIP));         // Short info aboy a city
 ## Basic Usage ( with country database example )
 
 ```shell
-use \HostBrook\SxGeo\SxGeo;
+use \HostBrook\SypexGeo\SypexGeo;
 
 ...
 
 // Create an object with the required database:
-$SxGeo = new SxGeo('SxGeo.dat');
+$SxGeo = new SypexGeo('SxGeo.dat');
 
 // get your IP address:
 $userIP = $_SERVER['REMOTE_ADDR'];

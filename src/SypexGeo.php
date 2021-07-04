@@ -10,10 +10,19 @@
 |   http://sypex.net/bsd_license.txt                                        |
 \***************************************************************************/
 
+/**
+ * NOTE: The original file has been modified by HostBrook to make it work with PHP >= 7.4.
+ */
+
+namespace HostBrook\SypexGeo;
+
 define ('SXGEO_FILE', 0);
 define ('SXGEO_MEMORY', 1);
 define ('SXGEO_BATCH',  2);
-class SxGeo {
+
+class SypexGeo 
+{
+
 	protected $fh;
 	protected $ip1c;
 	protected $info;
@@ -52,13 +61,16 @@ class SxGeo {
 	public $batch_mode  = false;
 	public $memory_mode = false;
 
-	public function __construct($db_file = 'SxGeo.dat', $type = SXGEO_FILE){
-		$this->fh = fopen($db_file, 'rb');
+	public function __construct($db_file = 'SxGeo.dat', $type = SXGEO_FILE)
+	{
+
+		$this->fh = fopen( dirname(__FILE__) . DIRECTORY_SEPARATOR . $db_file, 'rb');
 		// Сначала убеждаемся, что есть файл базы данных
 		$header = fread($this->fh, 40); // В версии 2.2 заголовок увеличился на 8 байт
 		if(substr($header, 0, 3) != 'SxG') die("Can't open {$db_file}\n");
 		$info = unpack('Cver/Ntime/Ctype/Ccharset/Cb_idx_len/nm_idx_len/nrange/Ndb_items/Cid_len/nmax_region/nmax_city/Nregion_size/Ncity_size/nmax_country/Ncountry_size/npack_size', substr($header, 3));
-		if($info['b_idx_len'] * $info['m_idx_len'] * $info['range'] * $info['db_items'] * $info['time'] * $info['id_len'] == 0) die("Wrong file format {$db_file}\n");
+		if( $info['b_idx_len'] * $info['m_idx_len'] * $info['range'] * $info['db_items'] * $info['time'] * $info['id_len'] == 0) die("Wrong file format {$db_file}\n");
+		
 		$this->range       = $info['range'];
 		$this->b_idx_len   = $info['b_idx_len'];
 		$this->m_idx_len   = $info['m_idx_len'];
@@ -92,7 +104,8 @@ class SxGeo {
 		$this->info['cities_begin']  = $this->info['regions_begin'] + $info['region_size'];
 	}
 
-	protected function search_idx($ipn, $min, $max){
+	protected function search_idx($ipn, $min, $max)
+	{
 		if($this->batch_mode){
 			while($max - $min > 8){
 				$offset = ($min + $max) >> 1;
@@ -128,7 +141,8 @@ class SxGeo {
 		return hexdec(bin2hex(substr($str, $min * $this->block_len - $this->id_len, $this->id_len)));
 	}
 
-	public function get_num($ip){
+	public function get_num($ip)
+	{
 		$ip1n = (int)$ip; // Первый байт
 		if($ip1n == 0 || $ip1n == 10 || $ip1n == 127 || $ip1n >= $this->b_idx_len || false === ($ipn = ip2long($ip))) return false;
 		$ipn = pack('N', $ipn);
@@ -165,7 +179,8 @@ class SxGeo {
 		}
 	}
 
-	protected function readData($seek, $max, $type){
+	protected function readData($seek, $max, $type)
+	{
 		$raw = '';
 		if($seek && $max) {
 			if ($this->memory_mode) {
@@ -178,7 +193,8 @@ class SxGeo {
 		return $this->unpack($this->pack[$type], $raw);
 	}
 
-	protected function parseCity($seek, $full = false){
+	protected function parseCity($seek, $full = false)
+	{
 		if(!$this->pack) return false;
 		$only_country = false;
 		if($seek < $this->country_size){
@@ -206,14 +222,15 @@ class SxGeo {
 		}
 	}
 
-	protected function unpack($pack, $item = ''){
+	protected function unpack($pack, $item = '')
+	{
 		$unpacked = array();
 		$empty = empty($item);
 		$pack = explode('/', $pack);
 		$pos = 0;
 		foreach($pack AS $p){
 			list($type, $name) = explode(':', $p);
-			$type0 = $type{0};
+			$type0 = $type[0];
 			if($empty) {
 				$unpacked[$name] = $type0 == 'b' || $type0 == 'c' ? '' : 0;
 				continue;
@@ -237,15 +254,15 @@ class SxGeo {
 				case 'T': $v = unpack('C', $val); break;
 				case 's': $v = unpack('s', $val); break;
 				case 'S': $v = unpack('S', $val); break;
-				case 'm': $v = unpack('l', $val . (ord($val{2}) >> 7 ? "\xff" : "\0")); break;
+				case 'm': $v = unpack('l', $val . (ord($val[2]) >> 7 ? "\xff" : "\0")); break;
 				case 'M': $v = unpack('L', $val . "\0"); break;
 				case 'i': $v = unpack('l', $val); break;
 				case 'I': $v = unpack('L', $val); break;
 				case 'f': $v = unpack('f', $val); break;
 				case 'd': $v = unpack('d', $val); break;
 
-				case 'n': $v = current(unpack('s', $val)) / pow(10, $type{1}); break;
-				case 'N': $v = current(unpack('l', $val)) / pow(10, $type{1}); break;
+				case 'n': $v = current(unpack('s', $val)) / pow(10, $type[1]); break;
+				case 'N': $v = current(unpack('l', $val)) / pow(10, $type[1]); break;
 
 				case 'c': $v = rtrim($val, ' '); break;
 				case 'b': $v = $val; $l++; break;
@@ -256,32 +273,43 @@ class SxGeo {
 		return $unpacked;
 	}
 
-	public function get($ip){
+	public function get($ip)
+	{
 		return $this->max_city ? $this->getCity($ip) : $this->getCountry($ip);
 	}
-	public function getCountry($ip){
+
+	public function getCountry($ip)
+	{
 		if($this->max_city) {
 			$tmp = $this->parseCity($this->get_num($ip));
 			return $tmp['country']['iso'];
 		}
 		else return $this->id2iso[$this->get_num($ip)];
 	}
-	public function getCountryId($ip){
+
+	public function getCountryId($ip)
+	{
 		if($this->max_city) {
 			$tmp = $this->parseCity($this->get_num($ip));
 			return $tmp['country']['id'];
 		}
 		else return $this->get_num($ip);
 	}
-	public function getCity($ip){
+
+	public function getCity($ip)
+	{
 		$seek = $this->get_num($ip);
 		return $seek ? $this->parseCity($seek) : false;
 	}
-	public function getCityFull($ip){
+
+	public function getCityFull($ip)
+	{
 		$seek = $this->get_num($ip);
 		return $seek ? $this->parseCity($seek, 1) : false;
 	}
-	public function about(){
+
+	public function about()
+	{
 		$charset = array('utf-8', 'latin1', 'cp1251');
 		$types   = array('n/a', 'SxGeo Country', 'SxGeo City RU', 'SxGeo City EN', 'SxGeo City', 'SxGeo City Max RU', 'SxGeo City Max EN', 'SxGeo City Max');
 		return array(
@@ -308,4 +336,5 @@ class SxGeo {
 			),
 		);
 	}
+
 }
