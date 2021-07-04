@@ -2,7 +2,8 @@
 
 This extension is based on Sypex Geo Database [https://sypexgeo.net/](https://sypexgeo.net/).
 
-The language requirements: PHP version >=5.4
+The language requirements: PHP version >=5.3.0
+
 The database signatures release date:  June 30, 2021
 
 ## Installation & Set Up
@@ -33,8 +34,8 @@ $SxGeo = new SxGeo('SxGeoCity.dat');
 // get your IP address:
 $userIP = $_SERVER['REMOTE_ADDR'];
 
-var_export($SxGeo->getCityFull($ip)); // Full info about a city
-var_export($SxGeo->get($ip));         // Short info aboy a city
+var_export($SxGeo->getCityFull($userIP)); // Full info about a city
+var_export($SxGeo->get($userIP));         // Short info aboy a city
 
 ```
 
@@ -52,6 +53,6 @@ $SxGeo = new SxGeo('SxGeo.dat');
 $userIP = $_SERVER['REMOTE_ADDR'];
 
 $userCountry = $SxGeo->getCountry($userIP); // Country code
-var_export($SxGeo->get($ip));               // Country code
+var_export($SxGeo->get($userIP));           // Country code
 
 ```
