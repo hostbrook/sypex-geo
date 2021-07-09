@@ -42,7 +42,7 @@ If you need to get just a 2-symbol country code by ISO 3166-2:
 
 ```shell
 // Add namespace at the beginning of the file:
-use \HostBrook\SypexGeo\SypexGeo;
+use HostBrook\SypexGeo\SypexGeo;
 
 ...
 
@@ -55,7 +55,7 @@ $userIP = $_SERVER['REMOTE_ADDR'];
 
 // Option 1 to get the ISO country code:
 $userCountry = $SxGeo->getCountry($userIP); // String, the country code
-// Option 2  is a short equialent for **country database** only:
+// Option 2  is a short equialent for country database only:
 $userCountry = $SxGeo->get($userIP);        // String, the country code
 
 ```
@@ -64,19 +64,19 @@ $userCountry = $SxGeo->get($userIP);        // String, the country code
 
 ```shell
 // Add namespace at the beginning of the file:
-use \HostBrook\SypexGeo\SypexGeo;
+use HostBrook\SypexGeo\SypexGeo;
 
 ...
 
 // Create an object with the city database in the argument:
 $SxGeo = new SypexGeo('SxGeoCity.dat');
 
-// get your IP address, for example:
+// Get your IP address, like an example:
 $userIP = $_SERVER['REMOTE_ADDR'];
 
 // Option 1 to get the city info:
 var_dump( $SxGeo->getCity($userIP) );     // Array, the short info about a city
-// Option 2 is a short equialent for **city database** only:
+// Option 2 is a short equialent for the city database only:
 var_dump( $SxGeo->get($userIP) );         // Array, the short info about a city
 
 // City full info with timezone and region:
