@@ -1,6 +1,7 @@
 # Sypex Geo - Get location info by IP address
 
-This extension is based on [Sypex Geo free databases](https://sypexgeo.net/) and lets you get the next info using IP address:
+This extension is based on [Sypex Geo free databases](https://sypexgeo.net/) and lets you get the next info by IP address:
+
 - Country code by ISO 3166-2
 - Region code by ISO 3166-2
 - City name
@@ -10,7 +11,7 @@ This extension is based on [Sypex Geo free databases](https://sypexgeo.net/) and
 
 The language requirements: PHP version >=5.3.0
 
-The databases release date:  **June 30, 2021**
+The databases release date: **February 19, 2022**
 
 ## PHP frameworks integration
 
@@ -19,6 +20,7 @@ You have to use Composer to add Sypex Geo to your project based on PHP framework
 ### Installation
 
 To get the latest version via Composer:
+
 ```shell
 composer require hostbrook/sypex-geo
 ```
@@ -54,9 +56,9 @@ $SxGeo = new SypexGeo();
 $userIP = $_SERVER['REMOTE_ADDR'];
 
 // Option 1 to get the ISO country code:
-$userCountry = $SxGeo->getCountry($userIP); // String, the country code
+$userCountry = $SxGeo->getCountry($userIP); // returns string, the country code
 // Option 2  is a short equialent for country database only:
-$userCountry = $SxGeo->get($userIP);        // String, the country code
+$userCountry = $SxGeo->get($userIP);        // returns string, the country code
 
 ```
 
