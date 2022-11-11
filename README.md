@@ -11,7 +11,7 @@ This extension is based on [Sypex Geo free databases](https://sypexgeo.net/) and
 
 The language requirements: PHP version >=5.3.0
 
-The databases release date: **July 24, 2022**
+The databases release date: **October 31, 2022**
 
 ## PHP frameworks integration
 
@@ -89,35 +89,35 @@ var_dump( $SxGeo->getCityFull($userIP) ); // Full info about a city
 Example Data:
 
 ```shell
- [
-		'city' => [
-				'id' => 524901,
-				'lat' => 55.75222,
-				'lon' => 37.61556,
-				'name_ru' => 'Москва',
-				'name_en' => 'Moscow',
-				'okato' => '45',
-		],
-		'region' => [
-				'id' => 524894,
-				'lat' => 55.76,
-				'lon' => 37.61,
-				'name_ru' => 'Москва',
-				'name_en' => 'Moskva',
-				'iso' => 'RU-MOW',
-				'timezone' => 'Europe/Moscow',
-				'okato' => '45',
-		],
-		'country' => [
-				'id' => 185,
-				'iso' => 'RU',
-				'continent' => 'EU',
-				'lat' => 60,
-				'lon' => 100,
-				'name_ru' => 'Россия',
-				'name_en' => 'Russia',
-				'timezone' => 'Europe/Moscow',
-		],
+[
+    'city' => [
+        'id' => 524901,
+        'lat' => 55.75222,
+        'lon' => 37.61556,
+        'name_ru' => 'Москва',
+        'name_en' => 'Moscow',
+        'okato' => '45',
+    ],
+    'region' => [
+        'id' => 524894,
+        'lat' => 55.76,
+        'lon' => 37.61,
+        'name_ru' => 'Москва',
+        'name_en' => 'Moskva',
+        'iso' => 'RU-MOW',
+        'timezone' => 'Europe/Moscow',
+        'okato' => '45',
+    ],
+    'country' => [
+        'id' => 185,
+        'iso' => 'RU',
+        'continent' => 'EU',
+        'lat' => 60,
+        'lon' => 100,
+        'name_ru' => 'Россия',
+        'name_en' => 'Russia',
+        'timezone' => 'Europe/Moscow',
+    ],
 ];
 
 ```
