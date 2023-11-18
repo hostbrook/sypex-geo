@@ -11,7 +11,7 @@ This extension is based on [Sypex Geo free databases](https://sypexgeo.net/) and
 
 The language requirements: PHP version >=5.3.0
 
-The databases release date: **August 18, 2023**
+The databases release date: **October 31, 2023**
 
 ## PHP frameworks integration
 
@@ -23,14 +23,6 @@ To get the latest version via Composer:
 
 ```shell
 composer require hostbrook/sypex-geo
-```
-
-### Upgrading
-
-Whenever there is a new release, then from the command line in your **project root**:
-
-```shell
-composer update
 ```
 
 ## Usage
@@ -131,3 +123,19 @@ $SxGeo = new SypexGeo('SxGeoCity.dat', SXGEO_BATCH | SXGEO_MEMORY);
 ```
 
 it can increase a response speed.
+
+## Upgrading
+
+Whenever there is a new release, then from the command line in your **project root**:
+
+```shell
+composer update
+```
+
+## Deleting package
+
+Running the following command will remove the package from vendor folder:
+
+```shell
+composer remove hostbrook/sypex-geo
+```
