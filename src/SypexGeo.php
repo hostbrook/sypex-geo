@@ -20,6 +20,7 @@ define ('SXGEO_FILE', 0);
 define ('SXGEO_MEMORY', 1);
 define ('SXGEO_BATCH',  2);
 
+#[\AllowDynamicProperties]
 class SypexGeo 
 {
 
