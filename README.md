@@ -11,7 +11,7 @@ This extension is based on [Sypex Geo free databases](https://sypexgeo.net/) and
 
 The language requirements: PHP version >=5.3.0
 
-The databases release date: **October 31, 2023**
+The databases release date: **September 30, 2024**
 
 ## PHP frameworks integration
 
